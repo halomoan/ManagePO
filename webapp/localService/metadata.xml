@@ -1,0 +1,195 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZUOLPO_ODATA_SRV" xml:lang="en" sap:schema-version="1">
+            <EntityType Name="PORoot" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GUID"/>
+                </Key>
+                <Property Name="GUID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="GUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TrxMode" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Transaction Mode" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="POMode" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="PO Mode" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <NavigationProperty Name="POItemSet" Relationship="ZUOLPO_ODATA_SRV.PONavToItem" FromRole="FromRole_PONavToItem" ToRole="ToRole_PONavToItem"/>
+                <NavigationProperty Name="ItemScheduleSet" Relationship="ZUOLPO_ODATA_SRV.PONavToItemSch" FromRole="FromRole_PONavToItemSch" ToRole="ToRole_PONavToItemSch"/>
+                <NavigationProperty Name="ItemAccountSet" Relationship="ZUOLPO_ODATA_SRV.PONavToItemAcc" FromRole="FromRole_PONavToItemAcc" ToRole="ToRole_PONavToItemAcc"/>
+                <NavigationProperty Name="PotextitemSet" Relationship="ZUOLPO_ODATA_SRV.PONavToItemText" FromRole="FromRole_PONavToItemText" ToRole="ToRole_PONavToItemText"/>
+                <NavigationProperty Name="POHeaderSet" Relationship="ZUOLPO_ODATA_SRV.PONavToHeader" FromRole="FromRole_PONavToHeader" ToRole="ToRole_PONavToHeader"/>
+            </EntityType>
+            <EntityType Name="POItem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GUID"/>
+                    <PropertyRef Name="PoNumber"/>
+                    <PropertyRef Name="PoItem"/>
+                </Key>
+                <Property Name="GUID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="GUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PO Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoItem" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TaxCode" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Tax Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ShortText" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Short Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Material Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Trackingno" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Tracking Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MatlGroup" Type="Edm.String" Nullable="false" MaxLength="9" sap:unicode="false" sap:label="Material Group" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="PO Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoUnit" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Order Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="NetPrice" Type="Edm.Decimal" Nullable="false" Precision="28" Scale="9" sap:unicode="false" sap:label="Currency amount" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PriceUnit" Type="Edm.Decimal" Nullable="false" Precision="5" Scale="0" sap:unicode="false" sap:label="Price unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Acctasscat" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Acct Assgmt Cat" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ItemAccount" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GUID"/>
+                    <PropertyRef Name="PoNumber"/>
+                    <PropertyRef Name="PoItem"/>
+                </Key>
+                <Property Name="GUID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="GUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PO Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoItem" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="GlAccount" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="G/L Account" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AssetNo" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Asset" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SubNumber" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Sub-number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Orderid" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="GrRcpt" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Recipient" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UnloadPt" Type="Edm.String" Nullable="false" MaxLength="25" sap:unicode="false" sap:label="Unloading Point" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CoArea" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="CO Area" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ProfitCtr" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Profit Center" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Costcenter" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Cost Center" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ItemSchedule" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GUID"/>
+                    <PropertyRef Name="PoNumber"/>
+                    <PropertyRef Name="PoItem"/>
+                </Key>
+                <Property Name="GUID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="GUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PO Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoItem" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DeliveryDate" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Delivery Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Potextitem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GUID"/>
+                    <PropertyRef Name="PoNumber"/>
+                    <PropertyRef Name="PoItem"/>
+                </Key>
+                <Property Name="GUID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="GUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PO Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoItem" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TextId" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Text ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TextForm" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Tag column" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TextLine" Type="Edm.String" Nullable="false" MaxLength="132" sap:unicode="false" sap:label="Text Line" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="POHeader" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GUID"/>
+                    <PropertyRef Name="PoNumber"/>
+                </Key>
+                <Property Name="GUID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="GUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PoNumber" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="PO Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CompCode" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Company Code" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocType" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Document Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Vendor" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PurchOrg" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Purchasing Org." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PurGroup" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Purch. Group" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="VatCntry" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="CtrySlsTxNo." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TrxID" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Transaction ID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="PONavToItemSch" sap:content-version="1">
+                <End Type="ZUOLPO_ODATA_SRV.PORoot" Multiplicity="1" Role="FromRole_PONavToItemSch"/>
+                <End Type="ZUOLPO_ODATA_SRV.ItemSchedule" Multiplicity="*" Role="ToRole_PONavToItemSch"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_PONavToItemSch">
+                        <PropertyRef Name="GUID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_PONavToItemSch">
+                        <PropertyRef Name="GUID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PONavToItemAcc" sap:content-version="1">
+                <End Type="ZUOLPO_ODATA_SRV.PORoot" Multiplicity="1" Role="FromRole_PONavToItemAcc"/>
+                <End Type="ZUOLPO_ODATA_SRV.ItemAccount" Multiplicity="*" Role="ToRole_PONavToItemAcc"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_PONavToItemAcc">
+                        <PropertyRef Name="GUID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_PONavToItemAcc">
+                        <PropertyRef Name="GUID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PONavToItemText" sap:content-version="1">
+                <End Type="ZUOLPO_ODATA_SRV.PORoot" Multiplicity="1" Role="FromRole_PONavToItemText"/>
+                <End Type="ZUOLPO_ODATA_SRV.Potextitem" Multiplicity="*" Role="ToRole_PONavToItemText"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_PONavToItemText">
+                        <PropertyRef Name="GUID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_PONavToItemText">
+                        <PropertyRef Name="GUID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PONavToHeader" sap:content-version="1">
+                <End Type="ZUOLPO_ODATA_SRV.PORoot" Multiplicity="1" Role="FromRole_PONavToHeader"/>
+                <End Type="ZUOLPO_ODATA_SRV.POHeader" Multiplicity="*" Role="ToRole_PONavToHeader"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_PONavToHeader">
+                        <PropertyRef Name="GUID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_PONavToHeader">
+                        <PropertyRef Name="GUID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="PONavToItem" sap:content-version="1">
+                <End Type="ZUOLPO_ODATA_SRV.PORoot" Multiplicity="1" Role="FromRole_PONavToItem"/>
+                <End Type="ZUOLPO_ODATA_SRV.POItem" Multiplicity="*" Role="ToRole_PONavToItem"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_PONavToItem">
+                        <PropertyRef Name="GUID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_PONavToItem">
+                        <PropertyRef Name="GUID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZUOLPO_ODATA_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="PORootSet" EntityType="ZUOLPO_ODATA_SRV.PORoot" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="POItemSet" EntityType="ZUOLPO_ODATA_SRV.POItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ItemAccountSet" EntityType="ZUOLPO_ODATA_SRV.ItemAccount" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="ItemScheduleSet" EntityType="ZUOLPO_ODATA_SRV.ItemSchedule" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="PotextitemSet" EntityType="ZUOLPO_ODATA_SRV.Potextitem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="POHeaderSet" EntityType="ZUOLPO_ODATA_SRV.POHeader" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="PONavToHeaderSet" Association="ZUOLPO_ODATA_SRV.PONavToHeader" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PORootSet" Role="FromRole_PONavToHeader"/>
+                    <End EntitySet="POHeaderSet" Role="ToRole_PONavToHeader"/>
+                </AssociationSet>
+                <AssociationSet Name="POHeaderToItemSet" Association="ZUOLPO_ODATA_SRV.PONavToItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PORootSet" Role="FromRole_PONavToItem"/>
+                    <End EntitySet="POItemSet" Role="ToRole_PONavToItem"/>
+                </AssociationSet>
+                <AssociationSet Name="POHeaderToItemScheduleSet" Association="ZUOLPO_ODATA_SRV.PONavToItemSch" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PORootSet" Role="FromRole_PONavToItemSch"/>
+                    <End EntitySet="ItemScheduleSet" Role="ToRole_PONavToItemSch"/>
+                </AssociationSet>
+                <AssociationSet Name="POHeaderToItemTextSet" Association="ZUOLPO_ODATA_SRV.PONavToItemText" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PORootSet" Role="FromRole_PONavToItemText"/>
+                    <End EntitySet="PotextitemSet" Role="ToRole_PONavToItemText"/>
+                </AssociationSet>
+                <AssociationSet Name="POHeaderToItemAccountSet" Association="ZUOLPO_ODATA_SRV.PONavToItemAcc" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="PORootSet" Role="FromRole_PONavToItemAcc"/>
+                    <End EntitySet="ItemAccountSet" Role="ToRole_PONavToItemAcc"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link
+                xmlns:atom="http://www.w3.org/2005/Atom" rel="self" href="./sap/ZUOLPO_ODATA_SRV/$metadata"/>
+                <atom:link
+                    xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version" href="./sap/ZUOLPO_ODATA_SRV/$metadata"/>
+                </Schema>
+            </edmx:DataServices>
+        </edmx:Edmx>

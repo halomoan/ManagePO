@@ -1,0 +1,2 @@
+/sap/opu/odata/sap/ZUOLPO_ODATA_SRV/POHeaderSet?$expand=POItemSet,ItemScheduleSet,ItemAccountSet,PotextitemSet&$format=json
+stopped at submission to the DEEP_ENTITY

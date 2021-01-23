@@ -1,0 +1,194 @@
+<mvc:View controllerName="uol.mm.ManagePO.controller.App" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+	xmlns:t="sap.ui.table" xmlns:u="sap.ui.unified">
+	<App>
+		<pages>
+			<Page title="{i18n>title}">
+				<content>
+					<t:Table id="poTable" visibleRowCount="17"
+						selectionMode="MultiToggle"
+						rows="{TableData>/Data}" class="sapUiSizeCompact sapUiSmallMargin">
+						<t:extension>
+							<OverflowToolbar>
+								<Title text="PO Items"/>
+								<ToolbarSpacer/>
+								<Button icon="sap-icon://add" tooltip="Add New Row" press="onAddItem"/> 
+								<Button
+									icon="sap-icon://decline"
+									tooltip="Delete Row"
+									press="onDeleteItem"/>
+								<u:FileUploader sameFilenameAllowed="true" iconOnly="false" buttonOnly="true" fileType="XLSX,xlsx"
+									icon="sap-icon://upload" iconFirst="true" style="Emphasized" change="onUpload"/>
+							</OverflowToolbar>
+						</t:extension>
+						<t:columns>
+							<t:Column width="11rem">
+								<Label text="PO No"/>
+								<t:template>
+									<Input value="{TableData>PoNumber}" editable="false"/>
+								</t:template>
+							</t:Column>
+						
+							<!--<t:Column width="11rem">-->
+							<!--	<Label text="TRX ID"/>-->
+							<!--	<t:template>-->
+							<!--		<Input value="{TableData>TrxID}" editable="false"/>-->
+							<!--	</t:template>-->
+							<!--</t:Column>-->
+							
+							<t:Column width="8rem">
+								<Label text="Vendor No"/>
+								<t:template>
+									<Input value="{TableData>VendorNo}" type="Number" maxLength="10"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Vendor"/>
+								<t:template>
+									<Input value="{TableData>Vendor}" />
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Delivery Date"/>
+								<t:template>
+									<!--<Input value="{path: 'TableData>DeliverDate', type : 'sap.ui.model.type.Date',formatOptions:{ source : { pattern: 'yyyyMMdd' }, pattern: 'MMM dd, yyyy' }}"/>-->
+									<DatePicker value="{TableData>DeliverDate}" valueFormat="yyyyMMdd" displayFormat="yyyy-MM-dd" />
+								</t:template>
+							</t:Column>
+							<t:Column width="5rem">
+								<Label text="Curr"/>
+								<t:template>
+									<Input value="{TableData>Curr}" maxLength="5"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="8rem">
+								<Label text="Company Code"/>
+								<t:template>
+									<Input value="{TableData>CoCode}" maxLength="4"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="8rem">
+								<Label text="Plant"/>
+								<t:template>
+									<Input value="{TableData>Plant}" maxLength="4"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+							<Label text="Purch. Org"/>
+								<t:template>
+									<Input value="{TableData>PurchOrg}" maxLength="4"/>
+								</t:template>
+							</t:Column>
+								<t:Column width="11rem">
+								<Label text="Purch. Group"/>
+								<t:template>
+									<Input value="{TableData>PurchGroup}" maxLength="4"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Account Assign. Category"/>
+								<t:template>
+									<Input value="{TableData>AcctAssginCat}" maxLength="1"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Material Text"/>
+								<t:template>
+									<Input value="{TableData>MaterialText}" maxLength="40"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Long Text"/>
+								<t:template>
+									<Input value="{TableData>MatLongText}"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Quantity"/>
+								<t:template>
+								<Input value="{ path: 'TableData>Quantity',type: 'sap.ui.model.type.Float',formatOptions: {minFractionDigits: 2,maxFractionDigits: 2,groupingEnabled: true} }" textAlign="End"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="5rem">
+								<Label text="UOM"/>
+								<t:template>
+									<Input value="{TableData>UOM}" maxLength="3"/>
+								</t:template>
+							</t:Column>
+							
+								<t:Column width="11rem">
+								<Label text="Tracking No"/>
+								<t:template>
+									<Input value="{TableData>TrackingNo}"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Net Price"/>
+								<t:template>
+									<!--<Input value="{TableData>NetPrice}"/>-->
+									<Input textAlign="End"
+									value="{ parts: [{path: 'TableData>NetPrice'}, {path: 'TableData>Curr'}] , type: 'sap.ui.model.type.Currency',formatOptions: {showMeasure: false } }"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Price Unit"/>
+								<t:template>
+									<!--<Input value="{TableData>PriceUnit}"/>-->
+										<Input textAlign="End"
+									value="{ parts: [{path: 'TableData>PriceUnit'}, {path: 'TableData>Curr'}] , type: 'sap.ui.model.type.Currency',formatOptions: {showMeasure: false } }"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Tax Code"/>
+								<t:template>
+									<Input value="{TableData>TaxCode}" maxLength="2"/>
+								</t:template>
+							</t:Column>						
+							<t:Column width="11rem">
+								<Label text="Mat.Group"/>
+								<t:template>
+									<Input value="{TableData>MatGroup}" maxLength="20"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Internal Order No"/>
+								<t:template>
+									<Input value="{TableData>IntOrderNo}" maxLength="10"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Asset No"/>
+								<t:template>
+									<Input value="{TableData>AssetNo}"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="GL. Account"/>
+								<t:template>
+									<Input value="{TableData>GLAccount}" maxLength="10"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Goods Recipient"/>
+								<t:template>
+									<Input value="{TableData>GoodsRCPT}" maxLength="12"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Goods Recipient"/>
+								<t:template>
+									<Input value="{TableData>UnloadPt}" maxLength="25"/>
+								</t:template>
+							</t:Column>
+						</t:columns>
+					</t:Table>
+				</content>
+					<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<Button text="Submit" type="Accept" press="onSubmit"/>
+			</OverflowToolbar>
+		</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
