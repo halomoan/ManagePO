@@ -21,10 +21,18 @@
 							</OverflowToolbar>
 						</t:extension>
 						<t:columns>
+							<t:Column width="5rem" hAlign="Center">
+								<Label text="Status"/>
+								<t:template>
+									<Button icon="{= ${TableData>TrxStatus} === 'E' ? 'sap-icon://decline': 'sap-icon://accept' }"
+									 type="Transparent" press="onShowStatus"></Button>
+								</t:template>
+							</t:Column>
+							
 							<t:Column width="11rem">
 								<Label text="PO No"/>
 								<t:template>
-									<Input value="{TableData>PoNumber}" editable="false"/>
+									<Input value="{TableData>PoNumber}" editable="false" />
 								</t:template>
 							</t:Column>
 						

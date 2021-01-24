@@ -40,7 +40,9 @@ sap.ui.define([
 					"GLAccount": "",
 					"GoodsRCPT": "",
 					"UnloadPt": "",
-					"TrxID": ""
+					"TrxID": "",
+					"TrxStatus": "",
+					"TrxMsg" : ""
 				}]
 			};
 
@@ -161,6 +163,20 @@ sap.ui.define([
 			
 		},
 		
+		onShowStatus: function(oEvent){
+			var sPath = oEvent.getSource().getBindingContext("TableData").getPath();
+			var oTableModel = oEvent.getSource().getModel("TableData");
+			var oData = oTableModel.getProperty(sPath);
+			
+			// var idx = sPath.split('/')[2];
+			
+			// var oTableModel = this.getView().getModel("TableData");
+			// var aData = oTableModel.getData().Data;
+			
+			console.log(oData);
+			
+		},
+		
 		_doSubmit: function(){
 			var oTableModel = this.getView().getModel("TableData");
 			var aData = oTableModel.getData().Data;
@@ -175,9 +191,32 @@ sap.ui.define([
 			
 			
 			
-			oModel.create("/UserCollection",oData,{
+			oModel.create("/PORootSet",oData,{
 			    success: function(oData,oResponse){
-			        console.log(oData,oResponse);
+			        
+			        var aPOHeaders = oData.POHeaderSet.results;
+			        var iSearchIdx = 0;
+			       
+			        for(var i = 0; i < aPOHeaders.length; i++){
+			        	var sPoNumber = aPOHeaders[i].PoNumber;
+			        	var sTrxID = aPOHeaders[i].TrxID
+			        	var sTrxStatus = aPOHeaders[i].TrxStatus;
+			        	var sTrxMsg = aPOHeaders[i].TrxMsg;
+			        	
+			        	while (iSearchIdx < aData.length){
+
+			        		if (aData[iSearchIdx].TrxID === sTrxID ){
+			        			aData[iSearchIdx].TrxStatus = sTrxStatus;
+			        			aData[iSearchIdx].TrxMsg = sTrxMsg;
+			        		} else {
+			        			break;
+			        		}
+			        		iSearchIdx++;
+			        	} //while
+			        	
+			        } // for
+			        oTableModel.refresh();
+			        
 			    },
 			    error: function(err){
 			        // some error occuerd 
@@ -190,12 +229,13 @@ sap.ui.define([
 		_mapPOHeaderData: function(aData) {
 			
 			var sVendor = null, sDeliverDate = null;
+			var sGUID = "1";
 			var iPONumber = 0;
 			var iPOItem = 0;
 			var oRoot, oPOHeaderSet,oPOItemSet,oItemScheduleSet,oItemAccountSet,oPotextitemSet;
 			
 			oRoot = {
-				"GUID" : "1",
+				"GUID" : sGUID,
         		"TrxMode" : "",
         		"POMode" : "XX"
 			};
@@ -221,14 +261,15 @@ sap.ui.define([
 					
 					
 					oPOHeaderSet = {};
-					oPOHeaderSet.PoNumber = iPONumber;
+					oPOHeaderSet.GUID = sGUID;
+					oPOHeaderSet.PoNumber = "" + iPONumber;
 					oPOHeaderSet.CompCode = oData.CoCode;
 					oPOHeaderSet.Vendor = oData.VendorNo;
 					oPOHeaderSet.PurGroup = oData.PurchGroup;
 					oPOHeaderSet.Currency = oData.Curr;
 					oPOHeaderSet.DocType = "NB";
 					oPOHeaderSet.PurchOrg = oData.PurchOrg;
-					oPOHeaderSet.TrxID = iPONumber;
+					oPOHeaderSet.TrxID = "" + iPONumber;
 					
 					
 					
@@ -242,20 +283,21 @@ sap.ui.define([
 					iPOItem = 0;
 				
 					oPOHeaderSet = {};
-					oPOHeaderSet.PoNumber = iPONumber;
+					oPOHeaderSet.GUID = sGUID;
+					oPOHeaderSet.PoNumber = "" + iPONumber;
 					oPOHeaderSet.CompCode = oData.CoCode;
 					oPOHeaderSet.Vendor = oData.VendorNo;
 					oPOHeaderSet.PurGroup = oData.PurchGroup;
 					oPOHeaderSet.Currency = oData.Curr;
 					oPOHeaderSet.DocType = "NB";
 					oPOHeaderSet.PurchOrg = oData.PurchOrg;
-					oPOHeaderSet.TrxID = iPONumber;
+					oPOHeaderSet.TrxID = "" + iPONumber;
 					
 					oRoot.POHeaderSet.results.push(oPOHeaderSet);
 				
 				}
 					
-					oData.TrxID = iPONumber;		
+					oData.TrxID = "" + iPONumber;		
 					
 					oPOItemSet = {};
 					oItemScheduleSet = {};
@@ -263,30 +305,32 @@ sap.ui.define([
 					oPotextitemSet = {};
 					
 					iPOItem++;
-					oPOItemSet.PoNumber = iPONumber;
-					oPOItemSet.PoItem = iPOItem;
+					oPOItemSet.GUID = sGUID;
+					oPOItemSet.PoNumber = "" + iPONumber;
+					oPOItemSet.PoItem = "" + iPOItem;
 					oPOItemSet.ShortText = oData.MaterialText;
 					oPOItemSet.Plant = oData.Plant;
 					oPOItemSet.Trackingno = oData.TrackingNo;
 					oPOItemSet.MatlGroup = oData.MatGroup;
 					oPOItemSet.Quantity = oData.Quantity;
 					oPOItemSet.PoUnit = oData.UOM;
-					oPOItemSet.NetPrice = oData.NetPrice;
-					oPOItemSet.PriceUnit = oData.PriceUnit;
+					oPOItemSet.NetPrice = "" + oData.NetPrice;
+					oPOItemSet.PriceUnit = "" + oData.PriceUnit;
 					oPOItemSet.TaxCode = oData.TaxCode;
 					oPOItemSet.Acctasscat = oData.AcctAssginCat;
 					
 					oRoot.POItemSet.results.push(oPOItemSet);
 					
-					oItemScheduleSet.PONumber = iPONumber;
-					oItemScheduleSet.PoItem = iPOItem;
+					oItemScheduleSet.GUID = sGUID;
+					oItemScheduleSet.PoNumber = "" + iPONumber;
+					oItemScheduleSet.PoItem = "" + iPOItem;
 					oItemScheduleSet.DeliveryDate = oData.DeliverDate;
 					
 					oRoot.ItemScheduleSet.results.push(oItemScheduleSet);
 					
-					
-					oItemAccountSet.PoNumber = iPONumber;
-					oItemAccountSet.PoItem = iPOItem;
+					oItemAccountSet.GUID = sGUID;
+					oItemAccountSet.PoNumber = "" +  iPONumber;
+					oItemAccountSet.PoItem = "" + iPOItem;
 					oItemAccountSet.GlAccount = oData.GLAccount;
 					oItemAccountSet.AssetNo = oData.AssetNo;
 					oItemAccountSet.SubNumber = '0000';
@@ -299,8 +343,9 @@ sap.ui.define([
 					
 					oRoot.ItemAccountSet.results.push(oItemAccountSet);
 					
-					oPotextitemSet.PoNumber = iPONumber;
-					oPotextitemSet.PoItem = iPOItem;
+					oPotextitemSet.GUID = sGUID;
+					oPotextitemSet.PoNumber = "" + iPONumber;
+					oPotextitemSet.PoItem = "" + iPOItem;
 					oPotextitemSet.TextId = "F01";
 					oPotextitemSet.TextForm = "";
 					oPotextitemSet.TextLine = oData.MatLongText;
@@ -368,6 +413,7 @@ sap.ui.define([
 					item[key] = item[key].trim();
 				}
 				
+				item.TrackingNo = item.TrackingNo.substring(0,10);
 				item.DeliverDate = this.formatter.yyyyMMdd(item.DeliverDate);
 				item.NetPrice = parseFloat(item.NetPrice.replace(/,/g, ""), 0);
 				item.PriceUnit = parseFloat(item.PriceUnit.replace(/,/g, ""), 0);
