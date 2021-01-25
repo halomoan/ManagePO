@@ -11,6 +11,7 @@
 							<OverflowToolbar>
 								<Title text="PO Items"/>
 								<ToolbarSpacer/>
+								<Button icon="sap-icon://download" tooltip="Add New Row" press="onExport"/> 
 								<Button icon="sap-icon://add" tooltip="Add New Row" press="onAddItem"/> 
 								<Button
 									icon="sap-icon://decline"
@@ -24,7 +25,7 @@
 							<t:Column width="5rem" hAlign="Center">
 								<Label text="Status"/>
 								<t:template>
-									<Button icon="{= ${TableData>TrxStatus} === 'E' ? 'sap-icon://decline': 'sap-icon://accept' }"
+									<Button icon="{= ${TableData>TrxStatus} === 'E' ? 'sap-icon://decline': '' }"
 									 type="Transparent" press="onShowStatus"></Button>
 								</t:template>
 							</t:Column>
@@ -33,6 +34,13 @@
 								<Label text="PO No"/>
 								<t:template>
 									<Input value="{TableData>PoNumber}" editable="false" />
+								</t:template>
+							</t:Column>
+							
+							<t:Column width="5rem">
+								<Label text="PO Type"/>
+								<t:template>
+									<Input value="{TableData>DocType}" />
 								</t:template>
 							</t:Column>
 						
@@ -167,6 +175,12 @@
 								<Label text="Asset No"/>
 								<t:template>
 									<Input value="{TableData>AssetNo}"/>
+								</t:template>
+							</t:Column>
+							<t:Column width="11rem">
+								<Label text="Cost Center"/>
+								<t:template>
+									<Input value="{TableData>CostCtr}" maxLength="10"/>
 								</t:template>
 							</t:Column>
 							<t:Column width="11rem">
